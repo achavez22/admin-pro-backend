@@ -4,7 +4,7 @@
 */
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { validateFields} = require('../middlewares/validate-fields');
+const { validateFields } = require('../middlewares/validate-fields');
 
 const { validateJWT } = require('../middlewares/validate-jwt');
 
@@ -30,11 +30,16 @@ router.post( '/',
 );
 
 router.put( '/:id',
-    [],
+    [
+        validateJWT,
+        check('nombre','El nombre del hospital es necesario').not().isEmpty(),
+        validateFields
+    ],
     actualizarHospital
 );
 
 router.delete( '/:id',
+    validateJWT,
     borrarHospital
 );
 
