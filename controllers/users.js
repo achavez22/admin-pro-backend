@@ -8,10 +8,9 @@ const getUsers = async(req, res) => {
 
     const [ usuarios, total ] = await Promise.all([
         User
-            .find({}, 'nombre email role google img')
+            .find({}, 'name email role google img')
             .skip( desde )
             .limit( 5 ),
-
         User.countDocuments()
     ]);
 
@@ -35,18 +34,15 @@ const createUser = async(req, res = response) => {
         }
 
         const user = new User( req.body );
-    
         // Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         user.password = bcrypt.hashSync( password, salt );
-    
-    
+
         // Guardar usuario
         await user.save();
 
         // Generar el TOKEN - JWT
         const token = await generateJWT( user.id );
-
 
         res.json({
             ok: true,
@@ -71,7 +67,6 @@ const updateUser = async (req, res = response) => {
     const uid = req.params.id;
 
     try {
-
         const userDB = await User.findById( uid );
         if ( !userDB ) {
             return res.status(404).json({
@@ -83,7 +78,7 @@ const updateUser = async (req, res = response) => {
         // Actualizaciones
         const { password, google, email, ...fields } = req.body;
 
-        if ( usuarioDB.email !== email ) {
+        if ( userDB.email !== email ) {
 
             const isEmail = await User.findOne({ email });
             if ( isEmail ) {
