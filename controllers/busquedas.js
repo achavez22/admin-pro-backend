@@ -43,7 +43,7 @@ const getDocumentosColeccion = async(req, res = response ) => {
             break;
 
         case 'usuarios':
-            data = await Usuario.find({ nombre: regex });
+            data = await Usuario.find({ name: regex });
 
             break;
 
