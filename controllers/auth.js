@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { generateJWT } = require('../helpers/jwt');
 const { googleVerify } = require('../helpers/google-verify');
+const {getMenuFrontend} = require("../helpers/menu-frontend");
 
 
 const login = async( req, res = response ) => {
@@ -36,7 +37,8 @@ const login = async( req, res = response ) => {
 
         res.json({
             ok: true,
-            token
+            token,
+            menu: getMenuFrontend(userDB.role)
         })
 
     } catch (error) {
