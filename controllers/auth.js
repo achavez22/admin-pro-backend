@@ -83,7 +83,8 @@ const googleSignIn = async( req, res = response ) => {
         res.json({
             ok: true,
             email, name, picture,
-            token
+            token,
+            menu: getMenuFrontend(userDB.role)
         });
 
     } catch (error) {
@@ -107,7 +108,8 @@ const renewToken = async(req, res = response) => {
     res.json({
         ok: true,
         token,
-        usuario
+        usuario,
+        menu: getMenuFrontend(usuario.role)
     });
 
 }
